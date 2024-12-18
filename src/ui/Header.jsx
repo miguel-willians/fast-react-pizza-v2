@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 function Header() {
   return (
     <header>
-      <Link to="/">Fast React Pizza CO.</Link>
+      <Link to="/">Fast React Pizza Co.</Link>
+      <p>%NAME%</p>
     </header>
   );
 }
