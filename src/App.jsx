@@ -1,20 +1,28 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import AppLayout from "./ui/AppLayout";
+import Error from "./ui/Error";
 import Home from "./ui/Home";
 import Menu, { loader as menuLoader } from "./features/menu/Menu";
 import Cart from "./features/cart/Cart";
 import Order from "./features/order/Order";
 import CreateOrder from "./features/order/CreateOrder";
-import AppLayout from "./ui/AppLayout";
 
 // Forma de declarar rotas na v6 do React Router:
 const router = createBrowserRouter([
   {
     //Parent route (também chamada de Layout Route):
     element: <AppLayout />,
+    //O errorElement será renderizado sempre que algum erro acontecer:
+    errorElement: <Error />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/menu", element: <Menu />, loader: menuLoader },
+      {
+        path: "/menu",
+        element: <Menu />,
+        loader: menuLoader,
+        errorElement: <Error />,
+      },
       { path: "/cart", element: <Cart /> },
       { path: "/order/:orderId", element: <Order /> },
       { path: "/order/new", element: <CreateOrder /> },
