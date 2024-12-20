@@ -51,7 +51,7 @@ function Order() {
   );
 }
 
-// O React router passa alguns dados ao executar o loader, tendo os parâmetros como um deles
+// O React router passa alguns dados ao executar o loader, tendo os parâmetros (params) como um desses dados:
 export async function loader({ params }) {
   const order = await getOrder(params.orderId);
   return order;

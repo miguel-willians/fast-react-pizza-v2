@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Form, redirect } from "react-router-dom";
+import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -38,7 +40,9 @@ function CreateOrder() {
     <div>
       <h2>Ready to order? Let's go!</h2>
 
-      <form>
+      {/* Form é um componente do react router. Por padrão o react definirá a rota de action como a mais próxima, portanto ela é desencessária neste caso: */}
+      {/* <Form method="POST" action="/order/new"> */}
+      <Form method="POST">
         <div>
           <label>First Name</label>
           <input type="text" name="customer" required />
@@ -70,11 +74,30 @@ function CreateOrder() {
         </div>
 
         <div>
+          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <button>Order now</button>
         </div>
-      </form>
+      </Form>
     </div>
   );
+}
+
+// A função action será executada e receberá a request como parâmetro toda vez que o Form for enviado:
+export async function action({ request }) {
+  const formData = await request.formData();
+  //Coverte a formData para objeto:
+  const data = Object.fromEntries(formData);
+
+  const order = {
+    ...data,
+    cart: JSON.parse(data.cart),
+    priority: data.priority === "on",
+  };
+
+  const newOrder = await createOrder(order);
+
+  //redirect tem a mesma funcionalidade do useNavigate. O useNavigate não poderia ser usado aqui já que hooks só podem ser usados dentro de componentes:
+  return redirect(`/order/${newOrder.id}`);
 }
 
 export default CreateOrder;
