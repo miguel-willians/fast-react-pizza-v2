@@ -1,17 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  //   cart: [],
-
-  cart: [
-    {
-      pizzaId: 12,
-      name: "Mediterranean",
-      quanity: 2,
-      unityPrice: 16,
-      totalPrice: 32,
-    },
-  ],
+  cart: [],
 };
 
 const cartSlice = createSlice({
@@ -29,14 +19,14 @@ const cartSlice = createSlice({
     increaseItemQuantity(state, action) {
       //payload = pizzaId
       const item = state.cart.find((item) => item.pizzaId === action.payload);
-      item.quanity++;
-      item.totalPrice = item.quanity * item.unityPrice;
+      item.quantity++;
+      item.totalPrice = item.quantity * item.unityPrice;
     },
     decreaseItemQuantity(state, action) {
       //payload = pizzaId
       const item = state.cart.find((item) => item.pizzaId === action.payload);
-      item.quanity--;
-      item.totalPrice = item.quanity * item.unityPrice;
+      item.quantity--;
+      item.totalPrice = item.quantity * item.unityPrice;
     },
     clearCart(state) {
       state.cart = [];
@@ -54,4 +44,9 @@ export const {
 
 export default cartSlice.reducer;
 
-console.log(cartSlice);
+// Ter funções seletoras no Slice pode causar problemas de performance em aplicações maiores. Use a biblioteca Reselect para otimizar
+export const getTotalCartQuantity = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
+
+export const getTotalCartPrice = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
