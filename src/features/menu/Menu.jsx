@@ -7,7 +7,6 @@ import MenuItem from "./MenuItem";
 function Menu() {
   // Hook que carregará os dados do loader:
   const menu = useLoaderData();
-  console.log(menu);
 
   return (
     <ul className="divide-y divide-stone-200 px-2">
