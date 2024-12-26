@@ -10,6 +10,8 @@ import CreateOrder, {
   action as createOrderAction,
 } from "./features/order/CreateOrder";
 
+import { action as UpdateOrderAction } from "./features/order/UpdateOrder";
+
 // Forma de declarar rotas na v6 do React Router:
 const router = createBrowserRouter([
   {
@@ -31,6 +33,7 @@ const router = createBrowserRouter([
         element: <Order />,
         loader: orderLoader,
         errorElement: <Error />,
+        action: UpdateOrderAction,
       },
       {
         path: "/order/new",
