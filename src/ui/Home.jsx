@@ -18,7 +18,7 @@ function Home() {
       {username === "" ? (
         <CreateUser />
       ) : (
-        <Button to="/menu" type="primery">
+        <Button to="/menu" type="primary">
           Continue ordering, {username}!
         </Button>
       )}
